@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ComicCraft Studio - AI powered comic story creator">
+  <title>ComicCraft Studio — AI Comic Creator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-orb orb-one"></div>
+  <div class="bg-orb orb-two"></div>
+  <div class="bg-orb orb-three"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">✦</span>
+      <span>
+        <strong>ComicCraft</strong>
+        <small>STUDIO</small>
+      </span>
+    </a>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" title="Toggle theme">☀️</button>
+      <button class="ghost-btn" id="historyBtn">🕘 History</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse-dot"></span> AI STORY → ART → COMIC</div>
+        <h1>Turn one idea into a <span>visual story.</span></h1>
+        <p>Build colorful comic scenes with AI-generated storytelling, character details, cinematic art prompts and a polished comic reader.</p>
+        <div class="hero-chips">
+          <span>✨ AI Storytelling</span>
+          <span>🎨 AI Art</span>
+          <span>💬 Dialogue</span>
+          <span>📚 Story History</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="mini-comic">
+          <div class="mini-panel panel-a"><span>⚡</span><b>IDEA</b></div>
+          <div class="mini-panel panel-b"><span>🧠</span><b>STORY</b></div>
+          <div class="mini-panel panel-c"><span>🎨</span><b>ART</b></div>
+        </div>
+        <div class="hero-card-footer"><span>3 steps</span><strong>One complete comic</strong></div>
+      </div>
+    </section>
+
+    <div id="toast" class="toast"></div>
+
+    <section class="workspace-grid">
+      <aside class="control-column">
+        <section class="card api-card">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">01 · CONNECTION</span>
+              <h2>🔐 Gemini API</h2>
+            </div>
+            <span id="apiBadge" class="status-badge">Not connected</span>
+          </div>
+          <p class="muted">Your key is stored only in this browser's localStorage for this demo.</p>
+          <div class="key-row">
+            <input id="apiKeyInput" type="password" autocomplete="off" placeholder="Paste Gemini API key">
+            <button id="toggleKeyBtn" class="square-btn" title="Show / hide key">👁️</button>
+          </div>
+          <div class="button-row">
+            <button id="saveApiKeyBtn" class="primary-small">Save key</button>
+            <button id="clearApiKeyBtn" class="secondary-small">Clear</button>
+          </div>
+          <a class="api-link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Get a key from Google AI Studio ↗</a>
+          <p id="apiStatus" class="status-text"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">02 · YOUR IDEA</span>
+              <h2>📝 Story Builder</h2>
+            </div>
+            <button id="randomIdeaBtn" class="tiny-action">🎲 Surprise me</button>
+          </div>
+
+          <div class="preset-row">
+            <button class="preset active" data-preset="adventure">⚔️ Adventure</button>
+            <button class="preset" data-preset="mystery">🔎 Mystery</button>
+            <button class="preset" data-preset="fantasy">🪄 Fantasy</button>
+            <button class="preset" data-preset="scifi">🚀 Sci‑Fi</button>
+          </div>
+
+          <label class="field-label" for="storyPrompt">What should happen?</label>
+          <textarea id="storyPrompt" maxlength="1200" placeholder="Example: A shy college student discovers that her old notebook can predict tomorrow's events..."></textarea>
+          <div class="field-meta"><span id="promptCount">0 / 1200</span><span>Ctrl + Enter to generate</span></div>
+
+          <div class="two-col">
+            <div>
+              <label class="field-label" for="protagonist">Main character</label>
+              <input id="protagonist" placeholder="e.g. Mira, a curious student">
+            </div>
+            <div>
+              <label class="field-label" for="companion">Side character</label>
+              <input id="companion" placeholder="e.g. Pixel, a tiny robot">
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <label class="field-label" for="genre">Genre</label>
+              <select id="genre">
+                <option>Adventure</option>
+                <option>Fantasy</option>
+                <option>Mystery</option>
+                <option>Science Fiction</option>
+                <option>Comedy</option>
+                <option>Romance</option>
+                <option>Slice of Life</option>
+                <option>Horror</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="tone">Mood</label>
+              <select id="tone">
+                <option>Fun & energetic</option>
+                <option>Heartwarming</option>
+                <option>Mysterious</option>
+                <option>Epic & dramatic</option>
+                <option>Funny</option>
+                <option>Emotional</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <label class="field-label" for="artStyle">Art style</label>
+              <select id="artStyle">
+                <option value="vibrant modern comic, bold ink outlines, rich colors, cinematic lighting">Vibrant Comic</option>
+                <option value="manga-inspired, expressive faces, dynamic speed lines, clean ink">Manga</option>
+                <option value="soft watercolor storybook, dreamy lighting, hand-painted texture">Watercolor</option>
+                <option value="stylized 3D animated movie, colorful, expressive characters">3D Animation</option>
+                <option value="retro pixel art, colorful 16-bit game aesthetic">Pixel Art</option>
+                <option value="dark graphic novel, dramatic shadows, high contrast, neon accents">Graphic Novel</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="language">Story language</label>
+              <select id="language">
+                <option>English</option>
+                <option>Tamil</option>
+                <option>Tanglish (Tamil + English)</option>
+                <option>Hindi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="range-line">
+            <label class="field-label" for="sceneCount">Comic panels</label>
+            <div class="range-wrap">
+              <input id="sceneCount" type="range" min="3" max="6" value="4">
+              <span id="sceneCountValue">4 panels</span>
+            </div>
+          </div>
+
+          <button id="generateBtn" class="generate-btn">
+            <span>✨ Generate My Comic</span><span class="arrow">→</span>
+          </button>
+          <button id="demoBtn" class="demo-btn">▶ Try a demo without API</button>
+        </section>
+
+        <section class="card feature-list">
+          <div class="section-head">
+            <div><span class="section-kicker">BUILT IN</span><h2>🚀 Extra Features</h2></div>
+          </div>
+          <div class="feature-grid">
+            <div><span>🎭</span><b>Character setup</b><small>Guide the cast</small></div>
+            <div><span>🎬</span><b>Cinematic scenes</b><small>Better image prompts</small></div>
+            <div><span>💾</span><b>Auto history</b><small>Saved in browser</small></div>
+            <div><span>📤</span><b>Export</b><small>Print or save HTML</small></div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="output-column">
+        <section id="emptyState" class="card empty-state">
+          <div class="empty-icon">🎨</div>
+          <h2>Your comic will appear here</h2>
+          <p>Enter an idea, choose your style and press <b>Generate My Comic</b>.</p>
+          <div class="workflow">
+            <div><span>1</span><b>Imagine</b><small>Describe your idea</small></div>
+            <div><span>2</span><b>Create</b><small>AI writes scenes</small></div>
+            <div><span>3</span><b>Visualize</b><small>AI creates artwork</small></div>
+          </div>
+        </section>
+
+        <section id="loadingCard" class="card loading-card hidden">
+          <div class="loader-orbit"><span></span><span></span><span></span></div>
+          <h2 id="loadingTitle">Creating your comic…</h2>
+          <p id="loadingText">Writing the story and planning scenes.</p>
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="loading-steps">
+            <span id="stepStory" class="active">🧠 Story</span>
+            <span id="stepArt">🎨 Art</span>
+            <span id="stepFinish">✨ Finish</span>
+          </div>
+        </section>
+
+        <section id="output" class="hidden">
+          <div class="output-toolbar">
+            <div>
+              <span class="section-kicker">YOUR CREATION</span>
+              <h2 id="storyTitle">My Comic</h2>
+              <p id="storyTagline" class="story-tagline"></p>
+            </div>
+            <div class="toolbar-actions">
+              <button id="copyStoryBtn" class="tool-btn">📋 Copy</button>
+              <button id="exportBtn" class="tool-btn">📄 Export</button>
+              <button id="printBtn" class="tool-btn">🖨️ Print</button>
+              <button id="favoriteStoryBtn" class="tool-btn">♡ Favorite</button>
+            </div>
+          </div>
+
+          <div id="characterStrip" class="character-strip"></div>
+          <div id="comicPanels" class="comic-grid"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div id="historyDrawer" class="drawer-backdrop hidden">
+    <aside class="history-drawer">
+      <div class="drawer-head">
+        <div><span class="section-kicker">LOCAL STORAGE</span><h2>🕘 Story History</h2></div>
+        <button id="closeHistoryBtn" class="icon-btn">✕</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <button id="clearHistoryBtn" class="danger-btn">Delete all history</button>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
